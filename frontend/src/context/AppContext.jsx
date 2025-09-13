@@ -18,7 +18,6 @@ export const AppContextProvider = ({children}) =>{
 
     const [cartItems,setCartItems] = useState({});
 
-
     const fetchProducts = async ()=>{
         setProducts(dummyProducts)
     }
