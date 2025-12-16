@@ -53,12 +53,32 @@ export const AppContextProvider = ({children}) =>{
         toast.success("Removed from Cart")
         setCartItems(cartData)
     }
+    //get cart item count
+    const getCartCount = ()=>{
+        let totalCount = 0;
+        for(const item in cartItems){
+            totalCount += cartItems[item];
+        }
+        return totalCount;
+    }
+
+    //get cart total amount
+    const getCartAmount = ()=>{
+        let totalAmount = 0;
+        for(const item in cartItems){
+            let itemInfo = products.find((product)=>product._id===item);
+            if(cartItems[item] >0){
+                totalAmount += itemInfo.offerPrice * cartItems[item];
+            }
+        }
+        return Math.floor(totalAmount*100)/100;
+    }
 
     useEffect(()=>{
         fetchProducts()
     },[])
 
-    const value ={navigate,user,setUser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,products,currency,updateCartItem,removeFromCart,cartItems,addToCart,searchQuery,setSearchQuery}
+    const value ={navigate,user,setUser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,products,currency,updateCartItem,removeFromCart,cartItems,addToCart,searchQuery,setSearchQuery,getCartAmount,getCartCount}
     return <AppContext.Provider value={value}>
         {children}
     </AppContext.Provider>
